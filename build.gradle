@@ -1,0 +1,47 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+allprojects {
+  repositories {
+    mavenCentral()
+    jcenter()
+  }
+}
+
+buildscript {
+  repositories {
+    jcenter()
+    maven { url "https://plugins.gradle.org/m2/" }
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:2.3.3'
+    classpath "com.gradle.publish:plugin-publish-plugin:0.9.10"
+  }
+}
+
+dependencies {
+  implementation gradleApi()
+  implementation localGroovy()
+  implementation "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
+  implementation "com.android.tools.build:gradle:2.3.3"
+}
+
+apply plugin: 'com.gradle.plugin-publish'
+
+group = 'com.bonborunote'
+archivesBaseName = 'stf-android-test-client'
+version = '0.1.0'
+
+pluginBundle {
+  website = 'https://github.com/ttymsd/stf-android-test-client'
+  vcsUrl = 'https://github.com/ttymsd/stf-android-test-client'
+  description = 'STFAndroidTestClient is a Gradle plugin. Run Android instrumental test using STF'
+  tags = ['android', 'test', 'stf']
+
+  plugins {
+    stfAndroidTestClient {
+      id = "$group.$archivesBaseName"
+      displayName = 'STF Android Test Client'
+    }
+  }
+}
